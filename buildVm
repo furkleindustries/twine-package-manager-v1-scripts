@@ -11,11 +11,11 @@ parser = argparse.ArgumentParser(description='Build the current TwinePM ' +
 
 args = parser.parse_args()
 
-cmd = ['vagrant', 'up']
-
 env = os.environ.copy()
 env['VAGRANT_CWD'] = dirname
 env['TWINEPM_BRANCH'] = 'dev'
+
+cmd = ['vagrant', 'up']
 proc = subprocess.Popen(cmd, env=env)
 proc.communicate()
 
