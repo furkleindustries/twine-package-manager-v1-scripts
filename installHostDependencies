@@ -36,7 +36,7 @@ cmd = ['apt-get', 'install', '--no-install-recommends', '-y', 'docker-ce']
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
-cmd = ['apt', 'get', 'install', '-y', 'pip']
+cmd = ['apt-get', 'install', '-y', 'pip']
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
