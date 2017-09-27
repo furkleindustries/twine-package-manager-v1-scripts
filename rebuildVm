@@ -10,25 +10,12 @@ compose_path = os.path.join(dirname, '../docker-compose.yml')
 parser = argparse.ArgumentParser(description='Rebuild containerized ' +
                                  'versions of TwinePM services.')
 
-parser.add_argument('--force', '-f', action='store_true', default=None,
-                    help='don\'t ask for confirmation')
-
-parser.add_argument('--dev', '-d', action='store_true',
-                    default=None,
-                    help='get the dev branch from the repository')
-
 args = parser.parse_args()
 
-cmd = [os.path.join(dirname, 'destroyVm')]
-if args.force:
-    cmd.append('--force')
-
+cmd = [os.path.join(dirname, 'stopVm')]
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
-cmd = [os.path.join(dirname, 'runVm')]
-if args.dev:
-    cmd.append('--dev')
-
+cmd = [os.path.join(dirname, 'runVm', '--provision')]
 proc = subprocess.Popen(cmd)
 proc.communicate()

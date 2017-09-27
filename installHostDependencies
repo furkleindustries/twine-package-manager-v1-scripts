@@ -36,8 +36,12 @@ cmd = ['apt-get', 'install', '--no-install-recommends', '-y', 'docker-ce']
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
-cmd = 'wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh'
-proc = subprocess.Popen(cmd, Shell=True)
+cmd = ['apt', 'get', 'install', '-y', 'pip']
+proc = subprocess.Popen(cmd)
+proc.communicate()
+
+cmd = ['pip', 'install', 'aws-shell']
+proc = subprocess.Popen(cmd)
 proc.communicate()
 
 version = '1.16.1'
