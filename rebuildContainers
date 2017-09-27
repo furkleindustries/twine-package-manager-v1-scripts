@@ -17,9 +17,9 @@ parser.add_argument('--fromcache', '-c', action='store_true',
                     help='do not replace the images; rather, build ' +
                         'from the cache if possible')
 
-parser.add_argument('--noup', '-n', action='store_true',
+parser.add_argument('--run', '-r', action='store_true',
                     default=None,
-                    help='do not bring the containers online')
+                    help='bring the containers online')
 
 args = parser.parse_args()
 
@@ -31,15 +31,15 @@ proc = subprocess.Popen(cmd)
 proc.communicate()
 
 cmd = [os.path.join(dirname, 'buildContainers')]
+
 if args.fromcache:
     cmd.append('--fromcache')
+
+if args.run:
+    cmd.append('--run')
 
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
-if not args.noup:
-    cmd = [os.path.join(dirname, 'runContainers')]
-    proc = subprocess.Popen(cmd)
-    proc.communicate()
 
 print('Container images rebuilt.')
