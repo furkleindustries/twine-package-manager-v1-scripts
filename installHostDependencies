@@ -36,14 +36,6 @@ cmd = ['apt-get', 'install', '--no-install-recommends', '-y', 'docker-ce']
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
-cmd = ['apt-get', 'install', '-y', 'pip']
-proc = subprocess.Popen(cmd)
-proc.communicate()
-
-cmd = ['pip', 'install', 'aws-shell']
-proc = subprocess.Popen(cmd)
-proc.communicate()
-
 version = '1.16.1'
 cmd1 = ['uname', '-s']
 cmd2 = ['uname', '-m']
