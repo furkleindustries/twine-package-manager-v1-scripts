@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser(description='Build containerized ' +
 parser.add_argument('--fromcache', '-f', '-c', action='store_true',
                     default=None, help='build the images from the cache')
 
-parser.add_argument('--run', '-n', '--up', '-u', action='store_true',
+parser.add_argument('--run', '-r', '--up', '-u', action='store_true',
                     default=None, help='bring the containers online')
 
 args = parser.parse_args()
@@ -26,8 +26,7 @@ proc = subprocess.Popen(cmd)
 proc.communicate()
 
 if args.run:
-    cmd.append(os.path.join(dirname, 'runContainers'))
-
+    cmd = [os.path.join(dirname, 'runContainers')]
     if args.fromcache:
         cmd.append('--fromcache')
 
