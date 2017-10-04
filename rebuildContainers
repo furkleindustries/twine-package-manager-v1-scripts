@@ -9,31 +9,29 @@ dirname = os.path.dirname(os.path.realpath(__file__))
 parser = argparse.ArgumentParser(description='Rebuild containerized ' +
                                  'versions of TwinePM services.')
 
-parser.add_argument('--containersonly', '-o', action='store_true',
-                    default=None, help='only remove containers')
-
-parser.add_argument('--fromcache', '-c', action='store_true',
-                    default=None,
+parser.add_argument('--from-cache', '-c', action='store_true', default=None,
                     help='do not replace the images; rather, build ' +
                         'from the cache if possible')
 
-parser.add_argument('--run', '-r', action='store_true',
-                    default=None,
+parser.add_argument('--run', '-r', action='store_true', default=None,
                     help='bring the containers online')
+
+parser.add_argument('--rebuild-all', '-a', action='store_true', default=None,
+                    help='rebuild container images, volumes, and networks')
 
 args = parser.parse_args()
 
 cmd = [os.path.join(dirname, 'removeContainers')]
-if args.containersonly:
-    cmd.append('--containersonly')
+if args.rebuild_all:
+    cmd.append('--remove-all')
 
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
 cmd = [os.path.join(dirname, 'buildContainers')]
 
-if args.fromcache:
-    cmd.append('--fromcache')
+if args.from_cache:
+    cmd.append('--from-cache')
 
 if args.run:
     cmd.append('--run')

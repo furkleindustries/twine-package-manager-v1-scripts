@@ -10,7 +10,7 @@ compose_path = os.path.join(dirname, '../docker-compose.yml')
 parser = argparse.ArgumentParser(description='Build containerized ' +
                                  'versions of TwinePM services.')
 
-parser.add_argument('--fromcache', '-f', '-c', action='store_true',
+parser.add_argument('--from-cache', '-f', '-c', action='store_true',
                     default=None, help='build the images from the cache')
 
 parser.add_argument('--run', '-r', '--up', '-u', action='store_true',
@@ -19,7 +19,7 @@ parser.add_argument('--run', '-r', '--up', '-u', action='store_true',
 args = parser.parse_args()
 
 cmd = ['docker-compose', '-f', compose_path, 'build']
-if not args.fromcache:
+if not args.from_cache:
     cmd.append('--no-cache')
 
 proc = subprocess.Popen(cmd)

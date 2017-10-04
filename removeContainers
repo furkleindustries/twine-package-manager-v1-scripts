@@ -10,14 +10,13 @@ compose_path = os.path.join(dirname, '../docker-compose.yml')
 parser = argparse.ArgumentParser(description='Remove containerized ' +
                                  'versions of TwinePM services.')
 
-parser.add_argument('--remove-all', '-r', action='store_true',
-                    default=None,
+parser.add_argument('--remove-all', '-a', action='store_true', default=None,
                     help='remove container images, volumes, and networks')
 
 args = parser.parse_args()
 
 cmd = ['docker-compose', '-f', compose_path]
-if args.removeall:
+if args.remove_all:
     cmd.extend(['down', '--remove-orphans'])
 else:
     cmd.append('rm')
