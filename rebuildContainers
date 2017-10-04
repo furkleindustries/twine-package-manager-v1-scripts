@@ -9,7 +9,7 @@ dirname = os.path.dirname(os.path.realpath(__file__))
 parser = argparse.ArgumentParser(description='Rebuild containerized ' +
                                  'versions of TwinePM services.')
 
-parser.add_argument('--containersonly', '-r', action='store_true',
+parser.add_argument('--containersonly', '-o', action='store_true',
                     default=None, help='only remove containers')
 
 parser.add_argument('--fromcache', '-c', action='store_true',
