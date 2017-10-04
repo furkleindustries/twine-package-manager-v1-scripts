@@ -1,7 +1,9 @@
 #! /usr/bin/env python3
 
 import argparse
+import errno
 import json
+import os
 import shutil
 import subprocess
 import urllib.request as request
@@ -15,7 +17,13 @@ obj = {
     "max-concurrent-downloads": 1,
 }
 
-with open('/etc/docker/daemon.json') as f:
+try:
+    os.makedirs('/etc/docker')
+except OSError as e:
+    if e.errno != errno.EEXIST:
+        raise
+
+with open('/etc/docker/daemon.json', 'w') as f:
     f.write(json.dump(obj))
 
 cmd = "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | " + \
