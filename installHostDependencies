@@ -24,7 +24,7 @@ except OSError as e:
         raise
 
 with open('/etc/docker/daemon.json', 'w') as f:
-    f.write(json.dump(obj))
+    f.write(json.dumps(obj))
 
 cmd = "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | " + \
     "sudo apt-key add -"
