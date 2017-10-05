@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(description='Remove containerized ' +
 
 args = parser.parse_args()
 
-cmd = ['docker-compose', '-f', compose_path, 'up', '-d']
+cmd = ['docker-compose', '-f', compose_path, '--verbose', 'up', '-d']
 
 proc = subprocess.Popen(cmd)
 proc.communicate()
