@@ -17,8 +17,9 @@ obj = {
     "max-concurrent-downloads": 1,
 }
 
-pathlib.Path('/etc/docker').mkdir(parents=True, exist_ok=True)
-with open('/etc/docker/daemon.json', 'w') as f:
+config_dir = '/root/.docker/'
+pathlib.Path(config_dir).mkdir(parents=True, exist_ok=True)
+with open('{}config.json'.format(config_dir), 'w') as f:
     f.write(json.dumps(obj))
 
 cmd = "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | " + \
@@ -67,9 +68,6 @@ url = ('https://raw.githubusercontent.com/docker/compose/{}/contrib/' +
 file_name = '/etc/bash_completion.d/docker-compose'
 with request.urlopen(url) as response, open(file_name, 'wb') as out_file:
     shutil.copyfileobj(response, out_file)
-
-with open('/etc/default/docker', 'w') as f:
-    f.write('DOCKER_OPTS="--config-file=/etc/docker/daemon.json"')
 
 cmd = ['service', 'docker', 'restart']
 proc = subprocess.Popen(cmd)
