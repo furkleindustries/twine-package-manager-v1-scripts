@@ -14,8 +14,8 @@ parser = argparse.ArgumentParser(description='Install dependencies ' +
 parser.parse_args()
 
 pathlib.Path('/etc/default').mkdir(parents=True, exist_ok=True)
-with open('/etc/default/docker', 'w') as f:
-    f.write('DOCKER_OPTS="--config-file=/etc/docker/daemon.json"')
+#with open('/etc/default/docker', 'w') as f:
+#    f.write('DOCKER_OPTS="--config-file=/etc/docker/daemon.json"')
 
 obj = {
     "max-concurrent-downloads": 1,
