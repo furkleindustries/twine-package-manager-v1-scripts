@@ -3,7 +3,7 @@
 import argparse
 import errno
 import json
-import os
+import pathlib
 import shutil
 import subprocess
 import urllib.request as request
@@ -17,12 +17,7 @@ obj = {
     "max-concurrent-downloads": 1,
 }
 
-try:
-    os.makedirs('/etc/docker')
-except OSError as e:
-    if e.errno != errno.EEXIST:
-        raise
-
+pathlib.Path('/etc/docker').mkdir(parents=True, exist_ok=True)
 with open('/etc/docker/daemon.json', 'w') as f:
     f.write(json.dumps(obj))
 
