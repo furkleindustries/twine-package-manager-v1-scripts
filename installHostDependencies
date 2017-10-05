@@ -13,15 +13,6 @@ parser = argparse.ArgumentParser(description='Install dependencies ' +
 
 parser.parse_args()
 
-obj = {
-    "max-concurrent-downloads": 1,
-}
-
-config_dir = '/root/.docker/'
-pathlib.Path(config_dir).mkdir(parents=True, exist_ok=True)
-with open('{}config.json'.format(config_dir), 'w') as f:
-    f.write(json.dumps(obj))
-
 cmd = "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | " + \
     "sudo apt-key add -"
 proc = subprocess.Popen(cmd, shell=True)
@@ -70,7 +61,15 @@ file_name = '/etc/bash_completion.d/docker-compose'
 with request.urlopen(url) as response, open(file_name, 'wb') as out_file:
     shutil.copyfileobj(response, out_file)
 
-cmd = ['service', 'docker', 'restart']
+obj = {
+    "max-concurrent-downloads": 1,
+}
+
+with open('/etc/docker/config.json', 'w') as f:
+    f.write(json.dumps(obj))
+
+# Restart the Docker daemon.
+cmd = ['kill', '-1', '13']
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
