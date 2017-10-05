@@ -44,7 +44,8 @@ cmd = ['apt-get', 'update']
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
-cmd = ['apt-get', 'install', '--no-install-recommends', '-y', 'docker-ce']
+cmd = ['apt-get', 'install', '--no-install-recommends',
+       '--no-install-suggests', '-y', 'docker-ce']
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
