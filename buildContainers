@@ -27,7 +27,7 @@ proc.communicate()
 
 if args.run:
     cmd = [os.path.join(dirname, 'runContainers')]
-    if args.fromcache:
+    if args.from_cache:
         cmd.append('--from-cache')
 
     proc = subprocess.Popen(cmd)
