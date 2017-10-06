@@ -69,7 +69,7 @@ with open('/lib/systemd/system/docker.service') as r:
             if line.startswith('ExecStart='):
                 line_to_write = line + ' --max-concurrent-downloads 1'
 
-            w.write(line_to_write)
+            a.write(line_to_write)
 
 shutil.move('/tmp/dockerServiceTemp', '/lib/systemd/system/docker.service')
 
