@@ -36,7 +36,7 @@ proc.communicate()
 
 if args.remove_all:
     cmd = ['docker', 'rmi']
-    prefix = args.prefix or 'twinepackagemanager_'
+    prefix = args.image_prefix or 'twinepackagemanager_'
     src = ['client', 'diskdb', 'logic', 'memorydb', 'web']
     if len(args.image_postfix_list):
         src = args.image_postfix_list
