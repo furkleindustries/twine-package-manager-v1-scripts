@@ -69,7 +69,8 @@ with open('/etc/docker/config.json', 'w') as f:
     f.write(json.dumps(obj))
 
 # Restart the Docker daemon.
-cmd = ['kill', '-1', '13']
+pid = subprocess.check_output('pidof dockerd').decode('utf-8')
+cmd = ['kill', '-SIGHUP', pid]
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
