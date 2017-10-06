@@ -61,16 +61,18 @@ file_name = '/etc/bash_completion.d/docker-compose'
 with request.urlopen(url) as response, open(file_name, 'wb') as out_file:
     shutil.copyfileobj(response, out_file)
 
-obj = {
-    "max-concurrent-downloads": 1,
-}
+with open('/lib/systemd/system/docker.service') as r:
+    with open('/tmp/dockerServiceTemp', 'a') as a:
+        line_to_write = ''
+        for line in r:
+            line_to_write = line
+            if line.startswith('ExecStart='):
+                line_to_write = line + ' --max-concurrent-downloads 1'
 
-with open('/etc/docker/config.json', 'w') as f:
-    f.write(json.dumps(obj))
+            w.write(line_to_write)
 
 # Restart the Docker daemon.
-pid = subprocess.check_output(['pidof', 'dockerd']).decode('utf-8')
-cmd = ['kill', '-SIGHUP', pid]
+cmd = ['service', 'dockerd', 'restart']
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
