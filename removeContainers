@@ -13,13 +13,35 @@ parser = argparse.ArgumentParser(description='Remove containerized ' +
 parser.add_argument('--remove-all', '-a', action='store_true', default=None,
                     help='remove container images, volumes, and networks')
 
+parser.add_argument('--image-prefix', '-p', default=None,
+                    help='set a prefix for the image name.')
+
+parser.add_argument('--image-postfix-list', '-l', nargs='+', default=[],
+                    type=str,
+                    help='remove a specific list of ' +
+                    'images by providing the postfixes for the ' +
+                    'image names (e.g. twinepackagemanager_X, where ' +
+                    'X is client, web, logic, etc.)')
+
 args = parser.parse_args()
 
-cmd = ['docker-compose', '-f', compose_path]
+cmd = ['docker-compose', '-f', compose_path, '--verbose']
 if args.remove_all:
     cmd.extend(['down', '--remove-orphans'])
 else:
     cmd.append('rm')
+
+proc = subprocess.Popen(cmd)
+proc.communicate()
+
+if args.remove_all:
+    cmd = ['docker', 'rmi']
+    prefix = args.prefix or 'twinepackagemanager_'
+    if len(args.image_postfix_list):
+        image_postfix_list = [prefix + x for x in args.image_postfix_list]
+    else:
+        src = ['client', 'diskdb', 'logic', 'memorydb', 'web']
+        image_postfix_list = [prefix + x for x in src]
 
 proc = subprocess.Popen(cmd)
 proc.communicate()
