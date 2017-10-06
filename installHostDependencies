@@ -71,6 +71,8 @@ with open('/lib/systemd/system/docker.service') as r:
 
             w.write(line_to_write)
 
+shutil.move('/tmp/dockerServiceTemp', '/lib/systemd/system/docker.service')
+
 # Restart the Docker daemon.
 cmd = ['service', 'dockerd', 'restart']
 proc = subprocess.Popen(cmd)
