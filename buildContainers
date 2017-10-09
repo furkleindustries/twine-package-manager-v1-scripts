@@ -18,7 +18,7 @@ parser.add_argument('--run', '-r', '--up', '-u', action='store_true',
 
 args = parser.parse_args()
 
-cmd = ['docker-compose', '-f', compose_path, '--verbose', 'build']
+cmd = ['docker-compose', '-f', compose_path, 'build']
 if not args.from_cache:
     cmd.append('--no-cache')
 

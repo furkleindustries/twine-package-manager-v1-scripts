@@ -52,5 +52,4 @@ if args.run:
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
-
 print('Container images rebuilt.')
