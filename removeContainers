@@ -18,7 +18,8 @@ parser.add_argument('--exclude-base-images', '-e', action='store_true',
 
 base_images = ['postgres', 'php', 'redis', 'node', 'nginx']
 parser.add_argument('--base-image-list', '-l', default=base_images,
-                    nargs='+', help='set a prefix for the image name.')
+                    nargs='+', help='set the names of the base ' +
+                                    'images to be removed')
 
 args = parser.parse_args()
 

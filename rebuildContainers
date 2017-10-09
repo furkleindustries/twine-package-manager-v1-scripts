@@ -19,11 +19,24 @@ parser.add_argument('--run', '-r', action='store_true', default=None,
 parser.add_argument('--rebuild-all', '-a', action='store_true', default=None,
                     help='rebuild container images, volumes, and networks')
 
+base_images = ['postgres', 'php', 'redis', 'node', 'nginx']
+parser.add_argument('--base-image-list', '-l', default=base_images,
+                    nargs='+', help='set the names of the base ' +
+                                    'images to be rebuilt')
+
+parser.add_argument('--exclude-base-images', '-e', action='store_true',
+                    default=None, help='do not rebuild the base images')
+
 args = parser.parse_args()
 
 cmd = [os.path.join(dirname, 'removeContainers')]
 if args.rebuild_all:
     cmd.append('--remove-all')
+
+cmd.extend(['--base-image-list'] + args.base_image_list)
+
+if args.exclude_base_images:
+    cmd.append('--exclude-base-images')
 
 proc = subprocess.Popen(cmd)
 proc.communicate()
