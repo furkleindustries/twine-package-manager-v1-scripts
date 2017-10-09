@@ -13,19 +13,16 @@ parser = argparse.ArgumentParser(description='Remove containerized ' +
 parser.add_argument('--remove-all', '-a', action='store_true', default=None,
                     help='remove container images, volumes, and networks')
 
-parser.add_argument('--image-prefix', '-p', default=None,
-                    help='set a prefix for the image name.')
+parser.add_argument('--exclude-base-images', '-e', action='store_true',
+                    default=None, help='do not delete the base images')
 
-parser.add_argument('--image-postfix-list', '-l', nargs='+', default=[],
-                    type=str,
-                    help='remove a specific list of ' +
-                    'images by providing the postfixes for the ' +
-                    'image names (e.g. twinepackagemanager_X, where ' +
-                    'X is client, web, logic, etc.)')
+base_images = ['postgres', 'php', 'redis', 'node', 'nginx']
+parser.add_argument('--base-image-list', '-l', default=base_images,
+                    nargs='+', help='set a prefix for the image name.')
 
 args = parser.parse_args()
 
-cmd = ['docker-compose', '-f', compose_path, '--verbose']
+cmd = ['docker-compose', '-f', compose_path]
 if args.remove_all:
     cmd.extend(['down', '--remove-orphans'])
 else:
@@ -34,20 +31,10 @@ else:
 proc = subprocess.Popen(cmd)
 proc.communicate()
 
-if args.remove_all:
-    cmd = ['docker', 'rmi']
-    prefix = args.image_prefix or 'twinepackagemanager_'
-    src = ['client', 'diskdb', 'logic', 'memorydb', 'web']
-    if len(args.image_postfix_list):
-        src = args.image_postfix_list
-
-    image_postfix_list = [prefix + x for x in src]
-    cmd.extend(image_postfix_list)
-
+if args.remove_all and not args.exclude_base_images:
+    cmd = ['docker', 'rmi'] + args.base_image_list
     proc = subprocess.Popen(cmd)
     proc.communicate()
-
-proc = subprocess.Popen(cmd)
-proc.communicate()
+    print('Base images removed.')
 
 print('Containers removed.')
